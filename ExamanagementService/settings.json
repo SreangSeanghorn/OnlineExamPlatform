@@ -1,0 +1,12 @@
+{
+    "omnisharp.autoStart": true,
+    "[csharp]": {
+        "editor.defaultFormatter": "ms-dotnettools.csharp",
+        "editor.codeActionsOnSave": {
+            "source.fixAll": "explicit",
+            "source.organizeImports": "explicit",
+            "source.sortMembers": "explicit"
+        }
+    },
+    "dotnet.completion.showCompletionItemsFromUnimportedNamespaces": true,
+}

@@ -1,0 +1,42 @@
+version: '3.7'
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.5.0
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    networks:
+      - my-kafka-network
+  kafka:
+    image: confluentinc/cp-kafka:7.5.0
+    container_name: kafka
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL: PLAINTEXT
+      # KAFKA_LISTENER_NAME_INSIDE: INSIDE
+      KAFKA_LISTENER_INTERNAL_PORT: 9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    depends_on:
+      - zookeeper 
+    networks:
+      - my-kafka-network
+  control-center:
+    image: confluentinc/cp-control-center:latest
+    ports:
+      - "9021:9021"
+    environment:
+      CONTROL_CENTER_KAFKA_BROKER: localhost:9092
+      CONTROL_CENTER_ZOOKEEPER: zookeeper:2181
+    networks:
+      - my-kafka-network
+networks:
+  my-kafka-network:
+    driver: bridge
+
