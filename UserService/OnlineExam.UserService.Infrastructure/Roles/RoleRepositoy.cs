@@ -18,7 +18,7 @@ namespace OnlineExam.UserService.Infrastructure.Roles
 
         public Task<Role> GetDefaultRole()
         {
-            return _context.Set<Role>().FirstOrDefaultAsync(r => r.Name == "User");
+            return _context.Set<Role>().FirstOrDefaultAsync(r => r.Name == "User")!;
         }
 
         public async Task<Role> GetRoleByNameAsync(string name)

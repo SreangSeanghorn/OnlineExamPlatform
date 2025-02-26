@@ -43,10 +43,13 @@ namespace OnlineExam.UserService.Domain.Users
             password = new PasswordHasher<User>().HashPassword(null, password);
             return new User(userName, email, password);
         }
-        public static User Register(string userName, Email email, string password,Guid roleId)
+        public static User Register(string userName, Email email, string password,Role role)
         {
             var user = Create(userName, email, password);
+            var roleId = role.Id;
+            user.AssignRole(role);
             var userRegisteredEventData = new UserRegisteredEventData(userName, email.Value, roleId);
+            // get role to ass the role 
             var userRegisteredEvent = new UserRegisteredEvent(user.Id, userRegisteredEventData);
             user.RaiseDomainEvents(userRegisteredEvent);
             return user;
@@ -65,7 +68,6 @@ namespace OnlineExam.UserService.Domain.Users
             var strategy = RoleStrategyFactory.GetStrategy(role);
             strategy.HandleRole(this);
             RaiseRoleAssignedEvent(role.Name);
-            return;
         }
         public void RaiseRoleAssignedEvent(string role)
         {

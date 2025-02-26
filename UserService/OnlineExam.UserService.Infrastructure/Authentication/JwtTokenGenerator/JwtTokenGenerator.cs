@@ -26,8 +26,9 @@ namespace OnlineExam.UserService.Infrastructure.Authentication
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             }
             .Union(roles.Select(role => new Claim(ClaimTypes.Role, role)));
+            
             var signingKey = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Secret))
-            , SecurityAlgorithms.HmacSha256Signature);
+            , SecurityAlgorithms.HmacSha256);
             var token = new JwtSecurityToken(
                 issuer: _jwtSettings.Issuer,
                 audience: _jwtSettings.Audience,
@@ -36,7 +37,7 @@ namespace OnlineExam.UserService.Infrastructure.Authentication
                 signingCredentials:  signingKey
             );
                
-
+            Console.WriteLine("Token: " + new JwtSecurityTokenHandler().WriteToken(token));
             return new JwtSecurityTokenHandler().WriteToken(token);
     }
 }

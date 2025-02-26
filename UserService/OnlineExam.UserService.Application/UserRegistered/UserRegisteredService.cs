@@ -42,14 +42,11 @@ namespace OnlineExam.UserService.Application.UserRegistered
             {
                 throw new Exception("User already registered.");
             }
-            var roleId = _roleRepository.GetDefaultRole().Result.Id;
-            var user = User.Register(name, mail, password, roleId);
+            var role = _roleRepository.GetDefaultRole().Result;
+            
+            var user = User.Register(name, mail, password, role);
             await _userRepository.AddAsync(user);
             await _unitOfWork.SaveChangesAsync();
-            // foreach (var domainEvent in user.Events)
-            // {
-            //     await _eventPublisher.Publish(domainEvent);
-            // }
             return user;
         }
 

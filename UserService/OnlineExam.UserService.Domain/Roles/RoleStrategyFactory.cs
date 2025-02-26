@@ -2,6 +2,7 @@ using System;
 using OnlineExam.Domain.Entities.Roles;
 using OnlineExam.UserService.Domain.Admins;
 using OnlineExam.UserService.Domain.Roles;
+using OnlineExam.UserService.Domain.Users;
 
 
 namespace OnlineExam.Domain.Entities.Users;
@@ -18,6 +19,7 @@ public static class RoleStrategyFactory
             { "Admin", new AdminRoleStrategy() },
             { "Teacher", new TeacherRoleStrategy() },
             { "Candidate", new CandidateRoleStrategy()},
+            { "User", new UserRoleStrategy() }
   
         };
     }

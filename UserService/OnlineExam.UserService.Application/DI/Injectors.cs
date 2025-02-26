@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
-using OnlineExam.Application.CommandHandler.Authentication;
 using OnlineExam.UserService.Application.Commons.Resolver;
 using OnlineExam.UserService.Application.Shared.CommandHandlers;
 using OnlineExam.UserService.Application.Shared.Resolver;

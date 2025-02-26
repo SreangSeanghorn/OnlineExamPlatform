@@ -1,4 +1,5 @@
 using System.Reflection;
+using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -6,10 +7,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using OnlineExam.Application.CommandHandler.Authentication;
 using OnlineExam.UserService.API.Middleware;
 using OnlineExam.UserService.Application.DI;
 using OnlineExam.UserService.Application.MessageBroker;
+using OnlineExam.UserService.Application.UserRegistered;
 using OnlineExam.UserService.Domain.Users;
 using OnlineExam.UserService.Infrastructure.Authentication;
 using OnlineExam.UserService.Infrastructure.DI;
@@ -24,13 +25,34 @@ var builder = WebApplication.CreateBuilder(args);
         }
     );
     var jwtSettings = builder.Configuration.GetSection("JwtSettings").Get<JwtSettings>();
+    var openIdConnectSettings = builder.Configuration.GetSection("OpenIdConnectSettings").Get<OpenIdConnectSettings>();
+    var auth0Settings = builder.Configuration.GetSection("Auth0Settings").Get<Auth0Settings>();
+    var googleSettings = builder.Configuration.GetSection("GoogleSettings").Get<GoogleSettings>();
     builder.Services.AddAuthentication(
         options =>
         {
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
             options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
         }
-    ).AddJwtBearer(
+    )
+        .AddJwtBearer("Auth0",
+        options =>
+        {
+            options.Authority = $"https://{auth0Settings.Domain}/";
+            options.Audience = auth0Settings.Audience;
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidIssuer = $"https://{auth0Settings.Domain}/",
+                ValidateAudience = true,
+                ValidAudience = auth0Settings.Audience,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                NameClaimType = ClaimTypes.NameIdentifier
+                
+            };
+        }
+    ).AddJwtBearer("Database",
         options =>
         {
             options.TokenValidationParameters = new TokenValidationParameters
@@ -43,8 +65,38 @@ var builder = WebApplication.CreateBuilder(args);
                 ValidAudience = jwtSettings.Audience,
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Secret))
             };
+        })
+        .AddOpenIdConnect("oidc",
+        options =>
+        {
+            options.Authority = openIdConnectSettings.Authority;
+            options.ClientId = openIdConnectSettings.ClientId;
+            options.ClientSecret = openIdConnectSettings.ClientSecret;
+            options.ResponseType = openIdConnectSettings.ResponseType;
+            options.SaveTokens = openIdConnectSettings.SaveTokens ?? false;
         }
-    );
+    )
+        ;
+    builder.Services.AddAuthorization(options =>
+    {
+        options.AddPolicy("ReadUser", policy =>
+            policy.RequireAssertion(context =>
+                context.User.HasClaim(c => 
+                    (c.Type == "scope" && c.Value.Split(' ').Contains("read:user")) ||
+                    (c.Type == "permissions" && c.Value.Contains("read:user"))
+                )
+            )
+        );
+        options.AddPolicy("WriteUser", policy =>
+            policy.RequireAssertion(context =>
+                context.User.HasClaim(c => 
+                    (c.Type == "scope" && c.Value.Split(' ').Contains("write:user")) ||
+                    (c.Type == "permissions" && c.Value.Contains("write:user"))
+                )
+            )
+        );
+    });
+    
     builder.Services
     .AddApplication()
     .AddInfrastructure(builder.Configuration)
@@ -71,8 +123,6 @@ builder.Services.AddSwaggerGen(c =>
             Type = SecuritySchemeType.ApiKey,
             Scheme = "Bearer"
         });
-
-        // Add Security Requirement (global authorization)
         c.AddSecurityRequirement(new OpenApiSecurityRequirement
         {
             {
@@ -88,6 +138,20 @@ builder.Services.AddSwaggerGen(c =>
             }
         });
     });
+
+builder.Services.AddCors(
+        options =>
+    {
+        options.AddPolicy("AllowAll",
+            builder =>
+            {
+                builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            }
+        );
+    }
+);
 
 var app = builder.Build();
 
@@ -105,5 +169,6 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+app.UseCors("AllowAll");
 app.Run();
 

@@ -16,12 +16,8 @@ public static class KafkaConfigurationExtensions
     {
         services.Configure<KafkaSettings>(configuration.GetSection("Kafka"));
         var brokerAddress = configuration["Kafka:BrokerAddress"];
-        // var topicName = configuration["Kafka:TopicName"];
-
         services.AddMassTransit(mt =>
         {
-            // // Register the consumer
-            // mt.AddConsumer<UserRegisteredEventConsumer>(); 
 
             mt.UsingInMemory((context, cfg) =>
             {
@@ -30,18 +26,10 @@ public static class KafkaConfigurationExtensions
 
             mt.AddRider(rider =>
             {
-                // rider.AddConsumer<UserRegisteredEventConsumer>();  
 
                 rider.UsingKafka((context, k) =>
                 {
-                    k.Host(brokerAddress); // Use the configuration value for broker address
-
-                    // Define the topic and consumer group
-                    // k.TopicEndpoint<UserRegisteredEvent>(topicName, "user-register", e =>
-                    // {
-                    //     e.AutoOffsetReset = Confluent.Kafka.AutoOffsetReset.Earliest;
-                    //     e.ConfigureConsumer<UserRegisteredEventConsumer>(context); // Configure the consumer
-                    // });
+                    k.Host(brokerAddress); 
                 });
             });
         });

@@ -15,7 +15,7 @@ namespace OnlineExam.UserService.Domain.Core.Primitive
         protected void RaiseDomainEvents(IDomainEvent domainEvent)
         {
             _events.Add(domainEvent);
-            Console.WriteLine("Event Raised"+domainEvent);
+            Console.WriteLine($"Event Raised here:{domainEvent.GetType()} and here is the event detail: "+domainEvent);
         }
         public void ClearEvents()
         {

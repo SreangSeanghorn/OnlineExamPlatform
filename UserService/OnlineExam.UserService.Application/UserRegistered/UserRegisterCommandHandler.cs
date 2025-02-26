@@ -1,18 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using OnlineExam.Domain.Entities;
-using Microsoft.AspNetCore.Identity;
 using FluentValidation;
+using Microsoft.AspNetCore.Identity;
 using OnlineExam.UserService.Application.Shared.CommandHandlers;
-using OnlineExam.UserService.Application.UserRegistered;
 using OnlineExam.UserService.Application.Shared.Responses;
-using OnlineExam.UserService.Domain.Users;
 using OnlineExam.UserService.Domain.Roles;
+using OnlineExam.UserService.Domain.Users;
 
-
-namespace OnlineExam.Application.CommandHandler.Authentication
+namespace OnlineExam.UserService.Application.UserRegistered
 {
     public class UserRegisterCommandHandler : ICommandHandler<UserRegisterCommand, BaseResponse<UserRegisteredResponse>>
     {

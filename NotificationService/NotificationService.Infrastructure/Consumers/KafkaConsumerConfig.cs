@@ -8,25 +8,20 @@ namespace NotificationService.Infrastructure.Consumers
   using Confluent.Kafka;
   using Microsoft.Extensions.Options;
 
-  public class KafkaConsumerConfig
+  public class KafkaConsumerConfig : ConsumerConfig
   {
     public ConsumerConfig ConsumerConfig { get; }
     public string[] Topics { get; }
 
     public KafkaConsumerConfig(IOptions<KafkaSettings> kafkaSettings)
     {
-      var settings = kafkaSettings.Value;
-
       ConsumerConfig = new ConsumerConfig
       {
-        BootstrapServers = settings.BootstrapServers,
-        GroupId = settings.GroupId,
-        AutoOffsetReset = Enum.TryParse<AutoOffsetReset>(settings.AutoOffsetReset, out var offsetReset)
-              ? offsetReset
-              : AutoOffsetReset.Earliest
+        BootstrapServers = kafkaSettings.Value.BootstrapServers,
+        GroupId = kafkaSettings.Value.GroupId,
+        AutoOffsetReset = kafkaSettings.Value.AutoOffsetReset
       };
-
-      Topics = settings.Topics;
+      Topics = kafkaSettings.Value.Topics;
     }
   }
 
