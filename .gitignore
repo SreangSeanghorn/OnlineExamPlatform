@@ -100,4 +100,7 @@ baseline.json
 .husky/_
 
 # Ignore cache created with the Angular CLI.
-.angular/
+.angular/NotificationService/docker-mailserver/data/mailstate/lib-clamav/daily.cld
+NotificationService/docker-mailserver/data/mailstate/lib-clamav/main.cvd
+NotificationService/docker-mailserver/data/mailstate/lib-clamav/daily.cld
+NotificationService/docker-mailserver/data/mailstate/lib-clamav/main.cvd
