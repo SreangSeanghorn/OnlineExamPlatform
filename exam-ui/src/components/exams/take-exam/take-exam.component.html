@@ -1,0 +1,22 @@
+<mat-card>
+  <mat-card-title>Exam: {{exam.title}}</mat-card-title>
+  <p *ngIf="timer">Time Left: {{ timer }} minutes</p>
+
+  <div *ngFor="let question of exam.questions">
+    <mat-card>
+      <mat-card-content>
+        <p>{{ question.text }}</p>
+        <mat-radio-group *ngIf="question.type === 'MCQ'">
+          <mat-radio-button *ngFor="let option of question.options" [value]="option">
+            {{ option }}
+          </mat-radio-button>
+        </mat-radio-group>
+        <mat-form-field *ngIf="question.type === 'ShortAnswer'" appearance="outline">
+          <input matInput placeholder="Your Answer">
+        </mat-form-field>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <button mat-raised-button color="accent">Submit Exam</button>
+</mat-card>

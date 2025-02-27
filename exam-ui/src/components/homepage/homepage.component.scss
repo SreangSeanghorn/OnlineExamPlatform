@@ -1,0 +1,54 @@
+@use '@angular/material' as mat;
+$primary-color: #027787;
+$secondary-color: #006D5b;
+.homepage-container {
+  text-align: center;
+  padding: 20px;
+  background: #f4f4f4;
+}
+
+/* Hero Section */
+.hero {
+  background: $primary-color;
+  color: white;
+  padding: 60px 20px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+}
+
+.cta-buttons button {
+  margin: 10px;
+  font-size: 1.2rem;
+}
+
+/* Features Section */
+.features {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.feature-card {
+  width: 300px;
+  padding: 20px;
+  text-align: center;
+}
+
+.feature-card mat-icon {
+  font-size: 40px;
+  color: $primary-color;
+}
+
+/* Footer */
+footer {
+  margin-top: 40px;
+  background: $secondary-color;
+  color: white;
+  padding: 10px;
+  text-align: center;
+}
