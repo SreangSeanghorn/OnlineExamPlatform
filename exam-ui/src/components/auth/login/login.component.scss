@@ -15,4 +15,16 @@ mat-card {
 
 .full-width {
   width: 100%;
+  padding: 15px;
+  background-color: #027787;
+  color: whitesmoke;
+  border: none;
+  border-radius: 5px;
 }
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
