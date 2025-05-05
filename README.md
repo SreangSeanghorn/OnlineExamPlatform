@@ -69,7 +69,7 @@ Prerequisites
 
 Clone the Repository
 
-git clone https://github.com/SreangSeanghorn/examination.git
+git clone https://github.com/SreangSeanghorn/OnlineExamPlatform.git
 cd Examination
 
 Run with Docker Compose
