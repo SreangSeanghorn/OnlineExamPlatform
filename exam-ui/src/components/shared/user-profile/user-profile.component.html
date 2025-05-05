@@ -1,0 +1,21 @@
+<button mat-button [matMenuTriggerFor]="menu" class="profile-trigger">
+  <img [src]="userProfile?.profilePictureUrl" class="avatar-sm"  alt=""/>
+  <span class="user-name">{{ userProfile?.name}}</span>
+</button>
+<mat-menu #menu="matMenu" class="profile-menu" [overlapTrigger]="false">
+  <div class="menu-content">
+    <img [src]="userProfile?.profilePictureUrl" class="avatar-lg" alt="User Image" />
+
+    <!-- User Info Section -->
+    <div class="user-info">
+      <h3>{{ userProfile?.name }}</h3>
+      <p class="username">&#64;{{ userProfile?.username }}</p>
+
+      <div class="contact">
+        <strong>Contact</strong>
+        <p><mat-icon>people</mat-icon> {{ userProfile?.gender }}</p>
+        <p><mat-icon>mail</mat-icon> {{ userProfile?.email }}</p>
+      </div>
+    </div>
+  </div>
+</mat-menu>

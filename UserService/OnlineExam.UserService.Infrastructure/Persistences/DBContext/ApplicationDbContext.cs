@@ -4,6 +4,9 @@ using OnlineExam.Infrastructure.Persistence.Configuration;
 using OnlineExam.UserService.Domain;
 using OnlineExam.UserService.Domain.Core.Event;
 using OnlineExam.UserService.Domain.Core.Primitive;
+using OnlineExam.UserService.Domain.Permissions;
+using OnlineExam.UserService.Domain.RolePermissions;
+using OnlineExam.UserService.Domain.Roles;
 using OnlineExam.UserService.Domain.Users;
 using OnlineExam.UserService.Infrastructure.Persistences.Configuration;
 
@@ -11,6 +14,9 @@ namespace OnlineExam.UserService.Infrastructure.Persistences.DBContext;
     public class ApplicationDbContext : DbContext,IUnitOfWork
     {
         public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<Permission> Permissions { get; set; }
+        public DbSet<RolePermission> RolePermissions { get; set; }
         private readonly IEventPublisher _publisher;
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IEventPublisher publisher) : base(options)
         {
@@ -21,6 +27,8 @@ namespace OnlineExam.UserService.Infrastructure.Persistences.DBContext;
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfiguration(new UserConfiguration());
             modelBuilder.ApplyConfiguration(new RoleConfiguration());
+            modelBuilder.ApplyConfiguration(new PermissionConfiguration());
+            modelBuilder.ApplyConfiguration(new RolePermissionConfiguration());
         }
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())

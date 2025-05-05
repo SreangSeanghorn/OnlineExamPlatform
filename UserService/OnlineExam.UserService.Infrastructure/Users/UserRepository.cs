@@ -44,5 +44,18 @@ namespace OnlineExam.UserService.Infrastructure.Users
             return await _context.Set<User>().FirstOrDefaultAsync(u => u.RefreshTokens.Any(t => t.Token == token));
             
         }
+        public async Task<User> GetUserByIdWithRolesAsync(Guid id)
+        {
+            return await _context.Set<User>().Include(u => u.Roles).FirstOrDefaultAsync(u => u.Id == id);
+        }
+
+        public async Task<User> GetUserAndUserRoleWithPermissionsByUsername(string username)
+        {
+            return await _context.Set<User>()
+                .Include(u => u.Roles)
+                .ThenInclude(r => r.RolePermissions)
+                .ThenInclude(rp => rp.Permission)
+                .FirstOrDefaultAsync(u => u.UserName == username);
+        }
     }
 }

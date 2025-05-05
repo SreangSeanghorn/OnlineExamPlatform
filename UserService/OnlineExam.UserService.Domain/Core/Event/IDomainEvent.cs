@@ -9,5 +9,6 @@ namespace OnlineExam.UserService.Domain.Core.Event
     {
         DateTime OccurredOn { get; }
         Guid EntityId { get; }
+        string EventType => GetType().Name;
     }
 }

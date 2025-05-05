@@ -10,6 +10,7 @@ namespace OnlineExam.UserService.Domain.Roles
     {
         Task<Role> GetDefaultRole();
         Task<Role> GetRoleByNameAsync(string roleName);
+        Task<Role> GetRoleByIdWithPermissionsAsync(Guid id);
         
     }
 }

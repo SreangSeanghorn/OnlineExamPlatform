@@ -1,0 +1,19 @@
+<div class="sidebar">
+  <h3>Schedule</h3>
+  <mat-form-field appearance="fill" class="day-select">
+    <mat-select [(value)]="currentDay" (selectionChange)="onDayChange()">
+      <mat-option *ngFor="let day of days" [value]="day">{{ day }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div class="schedule-grid">
+    <div *ngFor="let schedule of schedules" class="schedule-item">
+      <div class="schedule-subject">{{ schedule.subject }}</div>
+      <div class="schedule-time">{{ schedule.time }}</div>
+    </div>
+  </div>
+  <p *ngIf="schedules.length === 0">No classes scheduled for {{ currentDay }}</p>
+  <div class="calendar">
+    <h3>Calendar</h3>
+    <mat-calendar></mat-calendar>
+  </div>
+</div>

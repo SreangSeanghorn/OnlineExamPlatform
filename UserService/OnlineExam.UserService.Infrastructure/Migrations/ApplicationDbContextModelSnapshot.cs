@@ -22,6 +22,25 @@ namespace OnlineExam.UserService.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("OnlineExam.UserService.Domain.Permissions.Permission", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Permissions");
+                });
+
             modelBuilder.Entity("OnlineExam.UserService.Domain.RefreshTokens.RefreshToken", b =>
                 {
                     b.Property<Guid>("Id")
@@ -48,6 +67,21 @@ namespace OnlineExam.UserService.Infrastructure.Migrations
                     b.ToTable("RefreshToken");
                 });
 
+            modelBuilder.Entity("OnlineExam.UserService.Domain.RolePermissions.RolePermission", b =>
+                {
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("PermissionId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("RoleId", "PermissionId");
+
+                    b.HasIndex("PermissionId");
+
+                    b.ToTable("RolePermissions");
+                });
+
             modelBuilder.Entity("OnlineExam.UserService.Domain.Roles.Role", b =>
                 {
                     b.Property<Guid>("Id")
@@ -64,39 +98,7 @@ namespace OnlineExam.UserService.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Role");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("cdefd7e9-054a-4c34-887f-86d37dc665dd"),
-                            Description = "Admin Role",
-                            Name = "Admin"
-                        },
-                        new
-                        {
-                            Id = new Guid("8678fcf2-f567-4607-87db-7b3dc9477902"),
-                            Description = "User Role",
-                            Name = "User"
-                        },
-                        new
-                        {
-                            Id = new Guid("355b1519-0263-4d29-94dc-823681561788"),
-                            Description = "Teacher Role",
-                            Name = "Teacher"
-                        },
-                        new
-                        {
-                            Id = new Guid("ed22c6bd-d436-4f4d-a007-7cfd29d762e3"),
-                            Description = "Student Role",
-                            Name = "Student"
-                        },
-                        new
-                        {
-                            Id = new Guid("337b27eb-07c8-4c3c-87d7-3126df815e64"),
-                            Description = "Default Role",
-                            Name = "Default"
-                        });
+                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("OnlineExam.UserService.Domain.Users.User", b =>
@@ -117,14 +119,6 @@ namespace OnlineExam.UserService.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("f62a98d6-c1c2-4702-a100-060ef6bdf02c"),
-                            Password = "AQAAAAIAAYagAAAAEPJg0KABx1TyFFMm0OY2Q/HsTYHirmxAqneAUmO9SEzE3hqg2ecojbhozWnstx86Yw==",
-                            UserName = "admin"
-                        });
                 });
 
             modelBuilder.Entity("UserRole", b =>
@@ -149,6 +143,25 @@ namespace OnlineExam.UserService.Infrastructure.Migrations
                         .HasForeignKey("UserId");
                 });
 
+            modelBuilder.Entity("OnlineExam.UserService.Domain.RolePermissions.RolePermission", b =>
+                {
+                    b.HasOne("OnlineExam.UserService.Domain.Permissions.Permission", "Permission")
+                        .WithMany("Roles")
+                        .HasForeignKey("PermissionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("OnlineExam.UserService.Domain.Roles.Role", "Role")
+                        .WithMany("RolePermissions")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Permission");
+
+                    b.Navigation("Role");
+                });
+
             modelBuilder.Entity("OnlineExam.UserService.Domain.Users.User", b =>
                 {
                     b.OwnsOne("OnlineExam.UserService.Domain.Emails.Email", "Email", b1 =>
@@ -167,13 +180,6 @@ namespace OnlineExam.UserService.Infrastructure.Migrations
 
                             b1.WithOwner()
                                 .HasForeignKey("UserId");
-
-                            b1.HasData(
-                                new
-                                {
-                                    UserId = new Guid("f62a98d6-c1c2-4702-a100-060ef6bdf02c"),
-                                    Value = "seanghorn@gmail.com"
-                                });
                         });
 
                     b.Navigation("Email")
@@ -193,6 +199,16 @@ namespace OnlineExam.UserService.Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("OnlineExam.UserService.Domain.Permissions.Permission", b =>
+                {
+                    b.Navigation("Roles");
+                });
+
+            modelBuilder.Entity("OnlineExam.UserService.Domain.Roles.Role", b =>
+                {
+                    b.Navigation("RolePermissions");
                 });
 
             modelBuilder.Entity("OnlineExam.UserService.Domain.Users.User", b =>

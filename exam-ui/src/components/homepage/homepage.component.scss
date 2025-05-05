@@ -1,62 +1,87 @@
-@use '@angular/material' as mat;
 $primary-color: #027787;
 $secondary-color: #006D5b;
-.homepage-container {
-  text-align: center;
-  padding: 20px;
-  background: #f4f4f4;
+.mat-toolbar.navbar {
+  background-color: $secondary-color !important;
+  color: white !important;
 }
-
-/* Hero Section */
-.hero {
-  background: $primary-color;
-  color: white;
-  padding: 100px 20px;
-  border-radius: 8px;
-  margin-bottom: 30px;
-}
-
-.hero h1 {
-  font-size: 2.5rem;
-}
-
-.cta-buttons button {
-  margin: 10px;
-  font-size: 1.2rem;
-  padding: 10px 20px;
-  border-radius: 10px;
-  border: none;
-  background: white;
-  font-family: Arial, sans-serif;
-}
-
-/* Features Section */
-.features {
+.navbar {
   display: flex;
-  justify-content: center;
-  gap: 20px;
-  flex-wrap: wrap;
+  justify-content: space-between;
+  color: #006D5b;
+  background-color: #003d2d;
+  padding: 10px 20px;
+  .logo {
+    font-size: 24px;
+    font-weight: bold;
+    .highlight {
+      color: $secondary-color;
+    }
+  }
+  .nav-links a {
+    color: white;
+    font-weight: 500;
+  }
 }
 
-.feature-card {
-  width: 300px;
+.container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 80vh;
+  .left-section {
+    max-width: 40%;
+    text-align: center;
+    .highlight {
+      color: $secondary-color;
+    }
+    .quote {
+      font-style: italic;
+      color: gray;
+    }
+  }
+}
+
+.login-card {
   padding: 20px;
+  width: 320px;
   text-align: center;
-}
-
-.feature-card mat-icon {
-  font-size: 40px;
-  color: $primary-color;
-}
-
-/* Footer */
-footer {
-  margin-top: 40px;
-  background: $secondary-color;
-  color: white;
-  padding: 10px;
-  text-align: center;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
+  h2 {
+    margin-bottom: 10px;
+  }
+  .full-width {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  .forgot-password {
+    text-align: right;
+    display: block;
+    font-size: 12px;
+    color: gray;
+  }
+  .login-btn {
+    width: 100%;
+    background-color: $secondary-color;
+    color: white;
+    &:hover {
+      background-color: darken($secondary-color, 10%);
+    }
+  }
+  .or-text {
+    margin: 10px 0;
+  }
+  .google-login {
+    width: 100%;
+    background: white;
+    color: black;
+    border: 1px solid #ccc;
+    .google-icon {
+      width: 16px;
+      margin-right: 5px;
+    }
+  }
+  .google-icon{
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+  }
 }

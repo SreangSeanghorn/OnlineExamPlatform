@@ -40,24 +40,6 @@ namespace OnlineExam.Infrastructure.Persistence.Configuration
                           {
                               j.HasKey("UserId", "RoleId");
                           });
-                
-            var userId1 = Guid.NewGuid();
-            var userId2 = Guid.NewGuid();
-            builder.HasData(
-                new User
-                {
-                    Id = userId1,
-                    UserName = "admin",
-                    Password = new PasswordHasher<User>().HashPassword(null, "123")
-                });
-
-            builder.OwnsOne(e => e.Email, email =>
-            {
-                email.HasData(
-                    new { UserId = userId1, Value = "seanghorn@gmail.com" }
-                    );
-            });
-
             
         }
     }

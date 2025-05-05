@@ -1,37 +1,43 @@
-<div class="homepage-container">
-  <!-- Hero Section -->
-  <section class="hero">
-    <h1>Welcome to the Exam Management System</h1>
-    <p>Take, manage, and evaluate exams online with ease.</p>
-    <div class="cta-buttons">
-      <button mat-raised-button class="primary-btn" routerLink="/login">Login</button>
-      <button mat-raised-button class="secondary-btn" routerLink="/register">Register</button>
-    </div>
-  </section>
+<mat-toolbar class="navbar" color="accent">
+  <span class="logo">Tnak<span class="highlight">Ran</span></span>
+  <div class="nav-links">
+    <a mat-button routerLink="/">Home</a>
+    <a mat-button routerLink="/about">About</a>
+    <a mat-button routerLink="/register">Register</a>
+  </div>
+</mat-toolbar>
 
-  <!-- Features Section -->
-  <section class="features">
-    <mat-card class="feature-card">
-      <mat-icon color="primary">school</mat-icon>
-      <h3>Online Exams</h3>
-      <p>Students can take exams anytime, anywhere with our platform.</p>
-    </mat-card>
+<div class="container">
+  <div class="left-section">
+    <h1>Welcome to <span class="highlight">TnakRan</span></h1>
+    <p class="quote">
+      “Education is the passport to the future, for tomorrow belongs to those who prepare for it today”
+    </p>
+  </div>
 
-    <mat-card class="feature-card">
-      <mat-icon color="primary">edit</mat-icon>
-      <h3>Exam Management</h3>
-      <p>Teachers can create, schedule, and manage exams effortlessly.</p>
-    </mat-card>
+  <mat-card class="login-card">
+    <h2>Login</h2>
+    <p>Don't have an account? <a routerLink="/register">Register</a></p>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Username or Email</mat-label>
+      <input matInput type="text" [(ngModel)]="username" />
+      <mat-icon matSuffix>person</mat-icon>
+    </mat-form-field>
 
-    <mat-card class="feature-card">
-      <mat-icon color="primary">assessment</mat-icon>
-      <h3>Instant Results</h3>
-      <p>Get real-time grading and feedback with automated evaluation.</p>
-    </mat-card>
-  </section>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Password</mat-label>
+      <input matInput type="password" [(ngModel)]="password" />
+      <mat-icon matSuffix>lock</mat-icon>
+    </mat-form-field>
 
-  <!-- Footer -->
-  <footer>
-    <p>&copy; 2025 Exam Management System. All Rights Reserved.</p>
-  </footer>
+    <a class="forgot-password" href="#">Forget password?</a>
+
+    <button mat-raised-button color="accent" class="login-btn" (click)="onLogin()">Login</button>
+
+    <div class="or-text">OR</div>
+
+    <button mat-flat-button class="google-login">
+      <img src="assets/images/google-icon.png" class="google-icon"  alt=""/> Continue with Google
+    </button>
+  </mat-card>
 </div>

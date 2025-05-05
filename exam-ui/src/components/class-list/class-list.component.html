@@ -1,0 +1,32 @@
+<div class="class-grid">
+  <mat-card
+    *ngFor="let classItem of classes"
+    class="class-card"
+    [ngStyle]="{
+      'background-image': classItem.image ? 'url(' + classItem.image + ')' : 'none',
+      'background-color': !classItem.image ? classItem.color : 'transparent'
+    }">
+
+    <!-- Overlay Button -->
+
+    <mat-card-header>
+      <mat-card-title>{{ classItem.nickname }}</mat-card-title>
+      <div class="top-right-btn">
+        <button mat-icon-button>
+          <i class="fas fa-ellipsis-h"></i>
+        </button>
+      </div>
+    </mat-card-header>
+
+
+    <mat-card-actions class="card-footer">
+      <div class="left">
+        <p>{{ classItem.location }}</p>
+      </div>
+      <div class="right">
+        <i class="fas fa-user-graduate"></i> <!-- Font Awesome icon for students -->
+        <p>{{ classItem.students }}</p>
+      </div>
+    </mat-card-actions>
+  </mat-card>
+</div>

@@ -15,5 +15,7 @@ namespace OnlineExam.UserService.Domain.Users
 
         public Task<User> GetUserByEmailWithRolesAsync(string email);
         public Task<User> GetUserByRefreshToken(string token);
+        public Task<User> GetUserByIdWithRolesAsync(Guid id);
+        public Task<User> GetUserAndUserRoleWithPermissionsByUsername(string username);
     }
 }

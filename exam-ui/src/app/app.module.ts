@@ -9,9 +9,18 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatListModule } from '@angular/material/list';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { AdminDashboardComponent } from '../components/admin-dashboard/admin-dashboard/admin-dashboard.component';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { MatNativeDateModule } from '@angular/material/core';
+import { NotificationDetailComponent } from '../components/shared/notification/notification-detail/notification-detail.component'; // Import NotificationDetailComponent
 
 @NgModule({
+  declarations: [
+
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -24,6 +33,17 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     MatDialogModule,
     MatSnackBarModule,
     MatFormFieldModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatListModule,
+    MatCardModule,
+    MatButtonModule,
+    MatTableModule,
+    MatIconModule,
+    MatDialogModule,
+    AdminDashboardComponent,
+    HttpClientModule,
+    MatNativeDateModule
   ]
 })
-export class AppModule {}
+export class AppModule { }

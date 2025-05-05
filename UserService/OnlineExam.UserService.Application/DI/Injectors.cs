@@ -4,7 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
+using OnlineExam.UserService.Application.AssignedRoleUser;
 using OnlineExam.UserService.Application.Commons.Resolver;
+using OnlineExam.UserService.Application.Permissions;
+using OnlineExam.UserService.Application.RolePermissions.AssignRolePermissions;
+using OnlineExam.UserService.Application.RolePermissions.RevokePermissions;
 using OnlineExam.UserService.Application.Shared.CommandHandlers;
 using OnlineExam.UserService.Application.Shared.Resolver;
 using OnlineExam.UserService.Application.Shared.Responses;
@@ -32,6 +36,15 @@ namespace OnlineExam.UserService.Application.DI
             services.AddScoped<UserLoginService>();
             services.AddScoped<ICommandHandler<UserRefreshTokenCommand, BaseResponse<UserRefreshTokenResponse>>, UserRefreshTokenCommandHandler>();
             services.AddScoped<UserRefreshTokenService>();
+            services.AddScoped<ICommandHandler<AssignedRoleUserCommand>, AssignRoleCommandHandler>();
+            services.AddScoped<IValidator<AssignedRoleUserCommand>, AssignedRoleUserValidator>();
+            services.AddScoped<ICommandHandler<AddPermissionCommand>, AddPermissionHandler>();
+            services.AddScoped<IValidator<AddPermissionCommand>, AddPermissionValidator>();
+            services.AddScoped<ICommandHandler<AssignPermissionToRoleCommand>, AssignPermissionToRoleHandler>();
+            services.AddScoped<IValidator<AssignPermissionToRoleCommand>, AssignPermissionToRoleValidator>();
+            services
+                .AddScoped<ICommandHandler<RevokePermissionFromRoleCommand>, RevokePermissionFromRoleCommandHandler>();
+            services.AddScoped<IValidator<RevokePermissionFromRoleCommand>, RevokePermissionFromRoleCommandValidator>();
             return services;
 
         }

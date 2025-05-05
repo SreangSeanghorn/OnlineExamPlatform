@@ -1,0 +1,39 @@
+<div *ngIf="notification" class="notification-card">
+  <header class="notification-header">
+    <h2>Class Enrollment Notification</h2>
+  </header>
+  <section class="notification-body">
+    <p *ngIf="notification?.senderName">
+      <strong>Sender:</strong> {{ notification?.senderName }}
+    </p>
+    <p *ngIf="notification?.message">
+      <strong>Message:</strong> {{ notification?.message }}
+    </p>
+    <p>
+      <strong>Type:</strong> {{ notification?.type }}
+    </p>
+    <p>
+      <strong>Time:</strong> {{ getTimeAgo() }}
+    </p>
+  </section>
+  <footer class="notification-footer" style="display: flex; gap: 16px; margin-top: 16px;">
+    <button
+      *ngIf="notification?.type === 'class-enrollment'"
+      mat-raised-button
+      color="primary"
+      (click)="acceptClassEnrollment(notification)"
+      aria-label="Accept class enrollment"
+    >
+      Accept
+    </button>
+    <button
+      *ngIf="notification?.type === 'class-enrollment'"
+      mat-raised-button
+      color="accent"
+      (click)="rejectClassEnrollment(notification)"
+      aria-label="Reject class enrollment"
+    >
+      Reject
+    </button>
+  </footer>
+</div>

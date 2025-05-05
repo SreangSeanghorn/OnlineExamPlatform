@@ -1,0 +1,14 @@
+<mat-sidenav-container class="admin-dashboard">
+  <mat-sidenav mode="side" opened>
+    <mat-toolbar>Admin Panel</mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item routerLink="overview">Dashboard Overview</a>
+      <a mat-list-item routerLink="manage-users">Manage Users</a>
+      <a mat-list-item routerLink="manage-exams">Manage Exams</a>
+      <a mat-list-item routerLink="reports">Reports & Analytics</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-container>
+    <router-outlet></router-outlet>
+  </mat-sidenav-container>
+</mat-sidenav-container>

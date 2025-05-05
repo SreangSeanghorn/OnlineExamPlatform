@@ -1,0 +1,14 @@
+<app-toolbar [tabs]="tabs"></app-toolbar>
+<div class="dashboard">
+  <app-sidebar ></app-sidebar>
+  <div class="main-content">
+    <ng-container [ngSwitch]="notification?.type">
+      <ng-container *ngSwitchCase="'class-enrollment'">
+        <app-class-enrollment-notification [notification]="notification!"></app-class-enrollment-notification>
+      </ng-container>
+      <ng-container *ngSwitchCase="'assignment-due'">
+        <app-assignment-due-notification [notification]="notification!"></app-assignment-due-notification>
+      </ng-container>
+    </ng-container>
+  </div>
+</div>

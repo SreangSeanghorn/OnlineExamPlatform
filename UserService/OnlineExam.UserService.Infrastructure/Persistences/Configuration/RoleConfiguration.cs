@@ -16,41 +16,10 @@ namespace OnlineExam.UserService.Infrastructure.Persistences.Configuration
             builder.HasKey(e => e.Id);
             builder.Property(e => e.Id).ValueGeneratedOnAdd();
             builder.Property(e => e.Name).IsRequired();
-            
-            builder.HasData(
-                new Role
-                {
-                    Id = Guid.NewGuid(),
-                    Name = "Admin",
-                    Description = "Admin Role"
-                },
-                new Role
-                {
-                    Id = Guid.NewGuid(),
-                    Name = "User",
-                    Description = "User Role"
-                }
-                ,
-                new Role
-                {
-                    Id = Guid.NewGuid(),
-                    Name = "Teacher",
-                    Description = "Teacher Role"
-                },
-                new Role
-                {
-                    Id = Guid.NewGuid(),
-                    Name = "Student",
-                    Description = "Student Role"
-                },
-                new Role
-                {
-                    Id = Guid.NewGuid(),
-                    Name = "Default",
-                    Description = "Default Role"
-                }
-
-            );
+            builder.HasMany(e=>e.RolePermissions)
+                .WithOne()
+                .HasForeignKey(e => e.RoleId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

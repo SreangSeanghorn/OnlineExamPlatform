@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using OnlineExam.UserService.Domain.Core.Primitive;
+using OnlineExam.UserService.Domain.Permissions;
+using OnlineExam.UserService.Domain.RolePermissions;
 using OnlineExam.UserService.Domain.Users;
 
 namespace OnlineExam.UserService.Domain.Roles
@@ -12,6 +14,8 @@ namespace OnlineExam.UserService.Domain.Roles
         public string Name { get; set; }
         public string Description { get; set; }
         public ICollection<User> Users { get; set; } = new List<User>();   
+        private readonly List<RolePermission> _rolePermissions = new List<RolePermission>();
+        public IReadOnlyCollection<RolePermission> RolePermissions => _rolePermissions.AsReadOnly();
         public Role()
         {
         }
@@ -33,6 +37,21 @@ namespace OnlineExam.UserService.Domain.Roles
             {
                 Name = name,
             };
+        }
+
+        public void AssignPermission(Guid permissionId)
+        {
+            var rolePermission = RolePermission.createRolePermission(Id, permissionId);
+            _rolePermissions.Add(rolePermission);
+        }
+
+        public void RemovePermission(Guid permissionId)
+        {
+            var rolePermission = _rolePermissions.FirstOrDefault(rp => rp.PermissionId == permissionId);
+            if (rolePermission != null)
+            {
+                _rolePermissions.Remove(rolePermission);
+            }
         }
 
         public override bool Equals(object obj)

@@ -80,7 +80,10 @@ namespace OnlineExam.UserService.Domain.Users
         {
             return Roles.Select(r => r.Name).ToList();
         }
-
+        public bool HasRole(Role role)
+        {
+            return Roles.Any(r => r.Name == role.Name);
+        }
         public void AddRefreshToken(RefreshToken refreshToken, DateTime expiryDate)
         {
             RefreshTokens.Add(new RefreshToken(refreshToken.Token, expiryDate));

@@ -1,0 +1,19 @@
+<button mat-icon-button [matMenuTriggerFor]="notificationMenu" class="notification-button" color="primary">
+  <mat-icon>notifications</mat-icon>
+  <span class="badge" *ngIf="notifications.length > 0"></span>
+</button>
+
+<mat-menu #notificationMenu="matMenu" class="notification-menu" [overlapTrigger]="false">
+  <div class="notification-wrapper">
+    <h3 class="title">Notification</h3>
+    <div class="notification-list">
+      <div *ngFor="let n of notifications" class="notification-item" (click)="goToDetail(n)">
+        <img [src]="n.senderImageUrl" class="avatar"  alt=""/>
+        <div class="details">
+          <p><strong>{{ n.senderName }}</strong> {{ n.message }}</p>
+          <small>{{ formatTime(n.date) }} <span class="type">• {{ n.type }}</span></small>
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-menu>

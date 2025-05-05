@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using OnlineExam.UserService.Domain.RefreshTokens;
 using OnlineExam.UserService.Domain.Roles;
 using OnlineExam.UserService.Domain.Users;
-using OnlineExam.UserService.Infrastructure.Authentication;
+using OnlineExam.UserService.Infrastructure.Authentication.JwtTokenGenerators;
 using OnlineExam.UserService.Infrastructure.Authentication.JwtRefreshTokenGenerator;
 
 namespace OnlineExam.UserService.Application.UserLogin
@@ -43,7 +43,9 @@ namespace OnlineExam.UserService.Application.UserLogin
             if (_passwordHasher.VerifyHashedPassword(user, user.Password, password) == PasswordVerificationResult.Success)
             {
                 var roles = user.Roles.Select(r => r.Name).ToList();
-                var token = _jwtTokenGenerator.GenerateToken(username, roles);
+                var permissions = user.Roles.SelectMany(r => r.RolePermissions).Select(rp => rp.Permission.Name).ToList();
+                var token = _jwtTokenGenerator.GenerateToken(user.UserName, roles, permissions);
+             //   var token = _jwtTokenGenerator.GenerateToken(username, roles);
                 var refreshToken = _jwtRefreshTokenGenerator.GenerateRefreshToken();
                 var refreshTokenObj = new RefreshToken(
                     refreshToken,

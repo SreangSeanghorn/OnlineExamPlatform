@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using Confluent.Kafka;
 using MassTransit;
 using Microsoft.Extensions.Options;
@@ -26,9 +27,10 @@ public class KafkaEventPublisher : IEventPublisher
         };
 
         using var producer = new ProducerBuilder<string, string>(config).Build();
-
-        var topic = "user-registered";
-        var key = Guid.NewGuid().ToString(); // A unique key for partitioning
+        var topic = ResolveTopicName(domainEvent);
+        Console.WriteLine($"Topic: {topic}");
+       // var topic = "user-registered";
+        var key = Guid.NewGuid().ToString();
         var value = JsonConvert.SerializeObject(domainEvent);
         Console.WriteLine($"Publishing message to topic: {topic}" +
                           $"\n\tKey: {key}" +
@@ -47,6 +49,11 @@ public class KafkaEventPublisher : IEventPublisher
             Console.WriteLine($"Error publishing message: {ex.Error.Reason}");
         }
 
+    }
+    private string ResolveTopicName<TEvent>(TEvent @event)
+    {
+        var attr = @event.GetType().GetCustomAttribute<KafkaTopicAttribute>();
+        return attr?.Name ?? throw new InvalidOperationException("Missing KafkaTopic attribute.");
     }
 }
 

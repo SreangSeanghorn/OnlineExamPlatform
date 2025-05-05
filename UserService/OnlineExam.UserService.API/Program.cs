@@ -13,6 +13,7 @@ using OnlineExam.UserService.Application.MessageBroker;
 using OnlineExam.UserService.Application.UserRegistered;
 using OnlineExam.UserService.Domain.Users;
 using OnlineExam.UserService.Infrastructure.Authentication;
+using OnlineExam.UserService.Infrastructure.DataSeeders;
 using OnlineExam.UserService.Infrastructure.DI;
 using OnlineExam.UserService.Infrastructure.Persistences.DBContext;
 
@@ -31,8 +32,7 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services.AddAuthentication(
         options =>
         {
-            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultScheme = "Default";
         }
     )
         .AddJwtBearer("Auth0",
@@ -52,7 +52,7 @@ var builder = WebApplication.CreateBuilder(args);
                 
             };
         }
-    ).AddJwtBearer("Database",
+    ).AddJwtBearer("Jwt",
         options =>
         {
             options.TokenValidationParameters = new TokenValidationParameters
@@ -63,19 +63,9 @@ var builder = WebApplication.CreateBuilder(args);
                 ValidateIssuerSigningKey = true,
                 ValidIssuer = jwtSettings.Issuer,
                 ValidAudience = jwtSettings.Audience,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Secret))
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Secret)),
             };
         })
-        .AddOpenIdConnect("oidc",
-        options =>
-        {
-            options.Authority = openIdConnectSettings.Authority;
-            options.ClientId = openIdConnectSettings.ClientId;
-            options.ClientSecret = openIdConnectSettings.ClientSecret;
-            options.ResponseType = openIdConnectSettings.ResponseType;
-            options.SaveTokens = openIdConnectSettings.SaveTokens ?? false;
-        }
-    )
         ;
     builder.Services.AddAuthorization(options =>
     {
@@ -95,6 +85,22 @@ var builder = WebApplication.CreateBuilder(args);
                 )
             )
         );
+        options.AddPolicy("JwtPolicy", policy =>
+        {
+            policy.AddAuthenticationSchemes("Jwt");
+            policy.RequireAuthenticatedUser();
+        });
+        options.AddPolicy("JwtOrAuth0", policy =>
+        {
+            policy.AddAuthenticationSchemes("Jwt", "Auth0");
+            policy.RequireAuthenticatedUser();
+            policy.RequireAssertion(context =>
+                context.User.HasClaim(c =>
+                    (c.Type == "scope" && c.Value.Split(' ').Contains("read:user")) ||
+                    (c.Type == "permissions" && c.Value.Contains("read:user"))
+                )
+            );
+        });
     });
     
     builder.Services
@@ -154,6 +160,11 @@ builder.Services.AddCors(
 );
 
 var app = builder.Build();
+using (var scope = app.Services.CreateScope())
+{
+    var seeder = scope.ServiceProvider.GetRequiredService<IDataSeeder>();
+    await seeder.SeedAsync(); 
+}
 
 if (app.Environment.IsDevelopment())
 {

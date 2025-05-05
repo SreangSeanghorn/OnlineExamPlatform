@@ -25,5 +25,13 @@ namespace OnlineExam.UserService.Infrastructure.Roles
         {
             return await _context.Set<Role>().FirstOrDefaultAsync(r => r.Name == name);
         }
+
+        public Task<Role> GetRoleByIdWithPermissionsAsync(Guid id)
+        {
+            return _context.Set<Role>()
+                .Include(r => r.RolePermissions)
+                .ThenInclude(rp => rp.Permission)
+                .FirstOrDefaultAsync(r => r.Id == id);
+        }
     }
 }

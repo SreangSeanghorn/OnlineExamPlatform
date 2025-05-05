@@ -27,7 +27,17 @@ namespace OnlineExam.UserService.Application.Commons.Resolver
             {
                 throw new InvalidOperationException($"Handler for {typeof(TCommand).Name} not found");
             }
-             return await ((ICommandHandler<TCommand, TResult>)handler).Handle(command, default);
+            return await ((ICommandHandler<TCommand, TResult>)handler).Handle(command, default);
+        }
+        public async Task ResolveHandler<TCommand>(TCommand command)
+            where TCommand : ICommand
+        {
+            var handler = _serviceProvider.GetService(typeof(ICommandHandler<TCommand>));
+            if (handler == null)
+            {
+                throw new InvalidOperationException($"Handler for {typeof(TCommand).Name} not found");
+            }
+            await ((ICommandHandler<TCommand>)handler).Handle(command, default);
         }
     }
    

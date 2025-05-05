@@ -1,0 +1,118 @@
+.classwork-container {
+  padding: 24px;
+
+  .title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    border-left: 4px solid #e88a34;
+    padding-left: 10px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 20px;
+    font-weight: 500;
+    margin: 20px 0;
+  }
+
+  .create-button {
+    background-color: #45a097;
+    color: white;
+    padding: 6px 16px;
+    border: none;
+    border-radius: 20px;
+    font-weight: 500;
+    margin-bottom: 24px;
+    cursor: pointer;
+  }
+
+  .folder-section {
+    h4 {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .folder-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+
+      .folder-card {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 16px;
+        border-radius: 12px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        position: relative;
+        min-width: 220px;
+
+        .more-btn {
+          margin-left: auto;
+        }
+      }
+    }
+  }
+
+  .task-section {
+    margin-top: 32px;
+
+    h4 {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .task-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+
+      .task-card {
+        width: 300px;
+        padding: 16px;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+        .task-header {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          margin-bottom: 8px;
+
+          .more-btn {
+            margin-left: auto;
+          }
+        }
+
+        .due {
+          font-size: 12px;
+          color: gray;
+        }
+
+        .task-footer {
+          display: flex;
+          justify-content: space-between;
+          margin-top: 12px;
+
+          .grade-btn {
+            background-color: #45a097;
+            color: white;
+            padding: 4px 12px;
+            border: none;
+            border-radius: 20px;
+            font-weight: 500;
+          }
+
+          a {
+            font-size: 13px;
+            color: #333;
+          }
+        }
+      }
+    }
+  }
+}

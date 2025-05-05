@@ -6,5 +6,8 @@ namespace OnlineExam.UserService.Application.Shared.Resolver
     {
           Task<TResult> ResolveHandler<TCommand, TResult>(TCommand command)
            where TCommand : ICommand<TResult>;
+          Task ResolveHandler<TCommand>(TCommand command)
+              where TCommand : ICommand;
     }
+ 
 }

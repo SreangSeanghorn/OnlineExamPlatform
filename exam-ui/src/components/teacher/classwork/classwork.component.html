@@ -1,0 +1,39 @@
+<div class="classwork-container">
+  <h2 class="title">Phnom Penh Classroom</h2>
+  <div class="section-header">
+    <mat-icon>menu_book</mat-icon>
+    <h3>Classwork</h3>
+  </div>
+
+  <button class="create-button">Create</button>
+
+  <div class="folder-section">
+    <h4>Folders</h4>
+    <div class="folder-list">
+      <mat-card *ngFor="let folder of folders" class="folder-card">
+        <mat-icon>folder</mat-icon>
+        {{ folder.name }}
+        <button mat-icon-button class="more-btn"><mat-icon>more_vert</mat-icon></button>
+      </mat-card>
+    </div>
+  </div>
+
+  <div class="task-section">
+    <h4>Assigned Task</h4>
+    <div class="task-list">
+      <mat-card *ngFor="let task of tasks" class="task-card">
+        <div class="task-header">
+          <mat-icon>assignment</mat-icon>
+          <strong>{{ task.title }}</strong>
+          <button mat-icon-button class="more-btn"><mat-icon>more_vert</mat-icon></button>
+        </div>
+        <p>{{ task.description }}</p>
+        <p class="due">Due {{ task.due }}</p>
+        <div class="task-footer">
+          <button class="grade-btn">Grade</button>
+          <a href="#">2 comments</a>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+</div>

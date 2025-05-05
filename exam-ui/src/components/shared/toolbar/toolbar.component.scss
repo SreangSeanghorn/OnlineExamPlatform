@@ -1,0 +1,57 @@
+$primary-color: teal;
+$secondary-color: #f7943e;
+$background-color: #f5f5f5;
+
+.mat-toolbar {
+  background-color: $background-color !important;
+  color: $primary-color !important;
+}
+.top-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 24px;
+  background-color: white;
+  height: 64px;
+  border-bottom: 1px solid #eee;
+
+  .logo {
+    font-size: 22px;
+    font-weight: bold;
+    color: #f7943e;
+  }
+  .toolbar-items {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+
+    a {
+      position: relative;
+      font-weight: 500;
+      font-size: 16px;
+      color: #006d5b;
+      text-decoration: none;
+      padding-bottom: 4px;
+
+      &.active-tab::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 2px;
+        width: 100%;
+        background-color: #006d5b;
+        border-radius: 1px;
+      }
+
+      &:hover {
+        color: #004d3d;
+      }
+    }
+  }
+}

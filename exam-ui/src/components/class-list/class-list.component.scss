@@ -1,0 +1,93 @@
+$primary-color: #027787;
+$secondary-color: #006D5b;
+.class-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  padding: 1rem;
+  // Optional: Center and contain
+  max-width: 1200px;
+}
+
+.class-card {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  color: white;
+  width: 100%;
+  height: 250px;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0;
+
+  // Make card sections fill full width
+  ::ng-deep mat-card-header {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    padding: 0.5rem 1rem;
+    margin: 0;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: flex-start;
+  }
+  .top-right-btn {
+    position: absolute;
+    top: 0px;
+    right: 8px;
+    z-index: 2;
+
+    button {
+    //  background-color: rgba(255, 255, 255, 0.8);
+      border-radius: 50%;
+      padding: 6px;
+     // box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+
+      i {
+        color: white;
+        font-size: 16px;
+      }
+    }
+  }
+  ::ng-deep mat-card-actions {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    padding: 0.5rem 1rem;
+    margin: 0;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: flex-end;
+  }
+  .card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.4); // light black
+    padding: 0.5rem 1rem;
+    color: white;
+    width: 100%;
+
+    .left{
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .right {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    i {
+      font-size: 1rem;
+      color: white;
+    }
+
+    p {
+      margin: 0;
+    }
+  }
+}
+
