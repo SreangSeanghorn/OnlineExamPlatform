@@ -48,7 +48,7 @@ var builder = WebApplication.CreateBuilder(args);
                 ValidAudience = auth0Settings.Audience,
                 ValidateLifetime = true,
                 ValidateIssuerSigningKey = true,
-                NameClaimType = ClaimTypes.NameIdentifier
+                NameClaimType = ClaimTypes.NameIdentifier,
                 
             };
         }
@@ -63,6 +63,8 @@ var builder = WebApplication.CreateBuilder(args);
                 ValidateIssuerSigningKey = true,
                 ValidIssuer = jwtSettings.Issuer,
                 ValidAudience = jwtSettings.Audience,
+                NameClaimType = ClaimTypes.NameIdentifier,
+                RoleClaimType = ClaimTypes.Role,
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Secret)),
             };
         })
