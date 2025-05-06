@@ -35,7 +35,7 @@ public class DataSeeder : IDataSeeder
 
             await _context.Permissions.AddRangeAsync(permissions);
         }
-
+        
         if (!await _context.Roles.AnyAsync())
         {
             var roles = new List<Role>
@@ -59,8 +59,8 @@ public class DataSeeder : IDataSeeder
         if (!await _context.Users.AnyAsync())
         {
             Email email = Email.Create("admin@gmail.com");
-            var password = _passwordHasher.HashPassword(null, "admin");
-            var adminUser = User.Create("admin", email,password);
+            var password = _passwordHasher.HashPassword(null, "admin123");
+            var adminUser = User.Create("adminuser", email,password);
             // assign role to admin user
             var adminRole = await _context.Roles.FirstOrDefaultAsync(r => r.Name == "Admin");
             if (adminRole != null)

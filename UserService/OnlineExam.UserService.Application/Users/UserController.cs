@@ -16,7 +16,8 @@ public class UserController : ControllerBase
       _queryResolver = queryResolver;
    }
    
-  // [Authorize(Policy = "JwtOrAuth0")]
+   
+   [Authorize(Policy = "JwtOrAuth0")]
    [HttpPost("assign-role")]
    public async Task<IActionResult> AssignRole([FromBody] AssignedRoleUserRequestDto request)
    {

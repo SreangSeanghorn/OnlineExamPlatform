@@ -1,59 +1,64 @@
-# ExamUi
+🟦 Public Pages
+	1.	Home Page
+	•	Welcome banner
+	•	Login/Register CTA
+	•	About Section
+	2.	Login / Registration / Forgot Password
+	•	Login with Email/Password
+	•	Google Login (Social Auth)
+	•	Forgot Password (email input)
+	•	Register with full name, email, username, gender, school, classroom
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.0.
+⸻
 
-## Development server
+🟩 Authenticated User Dashboard
 
-To start a local development server, run:
+1. Teacher Dashboard
+	•	Top Navigation: Profile, Notifications, Settings, Logout
+	•	Tabs: Home, Classwork, Course, Result
 
-```bash
-ng serve
-```
+Home Section
+	•	Weekly schedule display (calendar UI)
+	•	Upcoming assignments
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Classwork
+	•	Create folders (topics)
+	•	Assignments under topics
+	•	Upload files or add YouTube links
+	•	Submit/grade/comment assignments
 
-## Code scaffolding
+Course
+	•	File listing (tutorials or course resources)
+	•	Create folders for organizing content
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Result
+	•	View student submissions
+	•	Grade assignments (points & feedback)
+	•	Submission status (on-time/late)
 
-```bash
-ng generate component component-name
-```
+⸻
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+2. Student Dashboard
+	•	Similar layout, but restricted permissions:
+	•	Can view, submit classwork/assignments
+	•	See grades and feedback
+	•	Join class (request flow)
 
-```bash
-ng generate --help
-```
+⸻
 
-## Building
+🟥 Admin Features (optional if you plan to expand)
+	•	Manage users (create/disable/delete)
+	•	Manage classes/schools
+	•	Assign teacher roles
 
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+  📁 Folder & Component Mapping (Angular)
+  📂 src
+├── 📁 app
+│   ├── 📁 auth (login, register, reset-password)
+│   ├── 📁 dashboard
+│   │   ├── 📁 home
+│   │   ├── 📁 classwork
+│   │   ├── 📁 course
+│   │   ├── 📁 result
+│   ├── 📁 shared (navbar, sidebar, dialog)
+│   └── 📁 core (auth guards, interceptors, services)

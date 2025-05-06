@@ -65,13 +65,6 @@ namespace OnlineExam.UserService.Application.Authentication
             return Ok(response);
 
         }
-
-        [HttpGet("getUser")]
-        [Authorize(Roles = "Candidate")]
-        public async Task<IActionResult> GetUser(){
-            return Ok("Hello World");
-        }
-
         [HttpPost("refreshToken")]
         public async Task<IActionResult> RefreshToken(string token)
         {
@@ -149,12 +142,5 @@ namespace OnlineExam.UserService.Application.Authentication
 
             return Ok(new { Email = email, Name = name });
         }
-        [HttpGet("protected")]
-        [Authorize(Policy = "ReadUser")]
-        public IActionResult Get()
-        {
-            return Ok("You have accessed a protected resource!");
-        }
-
     }
 }

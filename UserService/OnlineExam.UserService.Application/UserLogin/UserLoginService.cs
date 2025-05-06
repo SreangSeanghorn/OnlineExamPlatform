@@ -39,13 +39,16 @@ namespace OnlineExam.UserService.Application.UserLogin
 
         public async Task<UserLoginResponse> LoginUserAsync(string username, string password)
         {
-            var user = await _userRepository.GetUserByUsernameAsync(username) ?? throw new UserNotFoundException("User not foundsss");
+            var user = await _userRepository.GetUserAndUserRoleWithPermissionsByUsername(username);
+            if (user == null)
+            {
+                throw new InvalidCredentialException("Invalid credentials");
+            }
             if (_passwordHasher.VerifyHashedPassword(user, user.Password, password) == PasswordVerificationResult.Success)
             {
                 var roles = user.Roles.Select(r => r.Name).ToList();
                 var permissions = user.Roles.SelectMany(r => r.RolePermissions).Select(rp => rp.Permission.Name).ToList();
                 var token = _jwtTokenGenerator.GenerateToken(user.UserName, roles, permissions);
-             //   var token = _jwtTokenGenerator.GenerateToken(username, roles);
                 var refreshToken = _jwtRefreshTokenGenerator.GenerateRefreshToken();
                 var refreshTokenObj = new RefreshToken(
                     refreshToken,

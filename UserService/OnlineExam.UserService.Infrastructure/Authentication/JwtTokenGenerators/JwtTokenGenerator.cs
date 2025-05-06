@@ -14,34 +14,36 @@ namespace OnlineExam.UserService.Infrastructure.Authentication.JwtTokenGenerator
         {
             _jwtSettings = jwtSettings.Value;
         }
-    public string GenerateToken(string username, List<string> roles, List<string> permissions)
-    {
-        var claims = new[]
-            {
-                new Claim(JwtRegisteredClaimNames.Sub, username),
-                new Claim(ClaimTypes.Name, username),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-            }
-            .Union(roles.Select(role => new Claim(ClaimTypes.Role, role)))
-            .Union(new[]
-            {
-                new Claim("permissions", string.Join(" ", permissions))
-            });
-        var signingKey = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Secret))
-        , SecurityAlgorithms.HmacSha256);
-        Console.WriteLine(_jwtSettings.Secret);
-        var token = new JwtSecurityToken(
-            issuer: _jwtSettings.Issuer,
-            audience: _jwtSettings.Audience,
-            claims: claims,
-            expires: DateTime.UtcNow.AddMinutes(_jwtSettings.ExpiryInMinutes),
-            signingCredentials:  signingKey
-        );
-           
-        Console.WriteLine("Token: " + new JwtSecurityTokenHandler().WriteToken(token));
-        return new JwtSecurityTokenHandler().WriteToken(token);
-    } 
-    
+
+        public string GenerateToken(string username, List<string> roles, List<string> permissions)
+        {
+            var claims = new[]
+                {
+                    new Claim(JwtRegisteredClaimNames.Sub, username),
+                    new Claim(ClaimTypes.Name, username),
+                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+                }
+                .Union(roles.Select(role => new Claim(ClaimTypes.Role, role)))
+                .Union(new[]
+                {
+                    new Claim("scope", string.Join(" ", permissions))
+                });
+            var signingKey = new SigningCredentials(
+                new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Secret))
+                , SecurityAlgorithms.HmacSha256);
+            var token = new JwtSecurityToken(
+                issuer: _jwtSettings.Issuer,
+                audience: _jwtSettings.Audience,
+                claims: claims,
+                expires: DateTime.UtcNow.AddMinutes(_jwtSettings.ExpiryInMinutes),
+                signingCredentials: signingKey
+            );
+
+            Console.WriteLine("Token: " + new JwtSecurityTokenHandler().WriteToken(token));
+            Console.WriteLine("Payload: " + string.Join(", ", token.Claims.Select(c => $"{c.Type}={c.Value}")));
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
     }
 
 }
