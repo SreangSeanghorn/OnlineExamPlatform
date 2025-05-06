@@ -1,11 +1,17 @@
+@use "../../../styles/variables" as *;
 .sidebar {
-  width: 300px;
+  flex: 1 1 300px;
   padding: 20px;
   background: #fafafa;
   border-radius: 12px;
   display: flex;
   flex-direction: column;
   gap: 16px;
+  order: 1;
+
+  @media (max-width: $breakpoint-md) {
+    order: 2;
+  }
 
   h3 {
     font-size: 22px;
@@ -17,23 +23,17 @@
   }
 
   .day-select {
-    width: 100%;
     margin-bottom: 0px !important;
-
     mat-form-field {
-      width: 100%;
       margin: 0px !important;
       padding: 0 !important;
     }
   }
-
-
   .schedule-grid {
     margin-top: 0px !important;
     display: flex;
     flex-direction: column;
     gap: 1px;
-
     .schedule-item {
       display: flex;
       justify-content: space-between;

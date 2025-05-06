@@ -16,6 +16,7 @@ import { AdminDashboardComponent } from '../components/admin-dashboard/admin-das
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { MatNativeDateModule } from '@angular/material/core';
 import { NotificationDetailComponent } from '../components/shared/notification/notification-detail/notification-detail.component'; // Import NotificationDetailComponent
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { NotificationDetailComponent } from '../components/shared/notification/n
     MatDialogModule,
     AdminDashboardComponent,
     HttpClientModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    FlexLayoutModule,
   ]
 })
 export class AppModule { }

@@ -19,7 +19,7 @@ import {NgForOf} from '@angular/common';
     UserProfileComponent,
     NotificationComponent,
     UserSettingsComponent,
-    NgForOf
+    NgForOf,
 
   ],
     styleUrls: ['./toolbar.component.scss']

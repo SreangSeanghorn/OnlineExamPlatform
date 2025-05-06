@@ -1,12 +1,14 @@
 <mat-toolbar class="top-nav">
-    <div class="logo">Rean</div>
-    <div class="nav-links">
+  <div class ="toolbar-left">
+    <div class="logo">Tnak<span class="highlight">Rean</span></div>
+    </div>
+    <div class="toolbar-center nav-links">
         <a *ngFor="let tab of tabs" [routerLink]="tab.link" routerLinkActive="active-tab"
-            [routerLinkActiveOptions]="{ exact: true }" mat-button>
+            [routerLinkActiveOptions]="{ exact: true }" mat-button color="primary">
             {{ tab.label }}
         </a>
     </div>
-    <div class="toolbar-items">
+    <div class="toolbar-right toolbar-items">
         <app-user-profile></app-user-profile>
         <app-notification></app-notification>
         <app-user-settings></app-user-settings>
