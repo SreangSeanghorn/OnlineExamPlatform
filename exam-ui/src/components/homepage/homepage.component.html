@@ -1,9 +1,11 @@
-<mat-toolbar class="navbar" color="accent">
+<mat-toolbar class="navbar">
   <span class="logo">Tnak<span class="highlight">Ran</span></span>
   <div class="nav-links">
-    <a mat-button routerLink="/">Home</a>
-    <a mat-button routerLink="/about">About</a>
-    <a mat-button routerLink="/register">Register</a>
+    <a *ngFor="let tab of tabs" [routerLink]="tab.route" routerLinkActive="active-tab"
+      [routerLinkActiveOptions]="{ exact: true }" mat-button color="primary"
+      (click)="tab.name === 'Register' ? openRegister($event) : null">
+      {{ tab.name }}
+    </a>
   </div>
 </mat-toolbar>
 
@@ -14,30 +16,6 @@
       “Education is the passport to the future, for tomorrow belongs to those who prepare for it today”
     </p>
   </div>
-
-  <mat-card class="login-card">
-    <h2>Login</h2>
-    <p>Don't have an account? <a routerLink="/register">Register</a></p>
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Username or Email</mat-label>
-      <input matInput type="text" [(ngModel)]="username" />
-      <mat-icon matSuffix>person</mat-icon>
-    </mat-form-field>
-
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Password</mat-label>
-      <input matInput type="password" [(ngModel)]="password" />
-      <mat-icon matSuffix>lock</mat-icon>
-    </mat-form-field>
-
-    <a class="forgot-password" href="#">Forget password?</a>
-
-    <button mat-raised-button color="accent" class="login-btn" (click)="onLogin()">Login</button>
-
-    <div class="or-text">OR</div>
-
-    <button mat-flat-button class="google-login">
-      <img src="assets/images/google-icon.png" class="google-icon"  alt=""/> Continue with Google
-    </button>
-  </mat-card>
+  <app-login></app-login>
 </div>
+<router-outlet></router-outlet>
